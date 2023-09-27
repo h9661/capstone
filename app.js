@@ -6,6 +6,7 @@ const session = require("express-session");
 const dotenv = require("dotenv");
 
 const indexRouter = require("./backend/routes/index");
+const authRouter = require("./backend/routes/auth");
 const { sequelize } = require("./backend/models/index");
 const passportConfig = require("./backend/passport/index");
 const passport = require("./backend/passport/index");
@@ -48,6 +49,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use("/auth", authRouter);
 app.use("/", indexRouter);
 
 app.use((req, res, next) => {
