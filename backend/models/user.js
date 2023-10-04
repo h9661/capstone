@@ -40,8 +40,19 @@ class User extends Sequelize.Model {
     );
   }
 
+  // 1:N 관계 설정 with Post
+  // 1:N 관계 설정 with Comment
+  // 1:N 관계 설정 with Recomment
   static associate(db) {
-    // 추가 예정...
+    db.User.hasMany(db.Post, { foreignKey: "writer", sourceKey: "username" });
+    db.User.hasMany(db.Comment, {
+      foreignKey: "writer",
+      sourceKey: "username",
+    });
+    db.User.hasMany(db.Recomment, {
+      foreignKey: "writer",
+      sourceKey: "username",
+    });
   }
 }
 
