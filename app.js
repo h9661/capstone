@@ -4,12 +4,12 @@ const morgan = require("morgan");
 const path = require("path");
 const session = require("express-session");
 const dotenv = require("dotenv");
+const passport = require("passport");
 
 const indexRouter = require("./backend/routes/index");
 const authRouter = require("./backend/routes/auth");
 const { sequelize } = require("./backend/models/index");
 const passportConfig = require("./backend/passport/index");
-const passport = require("./backend/passport/index");
 
 sequelize
   .sync({ force: false }) // force: true -> 서버 실행 시마다 테이블 재생성
