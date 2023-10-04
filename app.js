@@ -12,7 +12,7 @@ const { sequelize } = require("./backend/models/index");
 const passportConfig = require("./backend/passport/index");
 
 sequelize
-  .sync({ force: false }) // force: true -> 서버 실행 시마다 테이블 재생성
+  .sync({ force: true }) // force: true -> 서버 실행 시마다 테이블 재생성
   .then(() => {
     console.log("데이터베이스 연결 성공");
   })
