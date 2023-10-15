@@ -3,7 +3,7 @@
     "username": "chanwoo",
     "password": "5565",
     "database": "everytime",
-    "host": "192.168.199.129",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
