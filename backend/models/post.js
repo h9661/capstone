@@ -8,6 +8,10 @@ class Post extends Sequelize.Model {
           type: Sequelize.STRING(40),
           allowNull: false,
         },
+        category: {
+          type: Sequelize.STRING(10),
+          allowNull: false,
+        },
         content: {
           type: Sequelize.TEXT,
           allowNull: false,
