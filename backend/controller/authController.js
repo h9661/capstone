@@ -3,7 +3,7 @@ const passport = require("passport");
 const User = require("../models/user");
 
 exports.join = async (req, res, next) => {
-  const { username, password } = req.body;
+  const { username, password, email } = req.body;
   try {
     const exUser = await User.findOne({ where: { username } });
     if (exUser) {
@@ -12,6 +12,7 @@ exports.join = async (req, res, next) => {
 
     const hash = await bycrypt.hash(password, 12);
     await User.create({
+      email,
       username,
       password: hash,
     });
@@ -31,7 +32,8 @@ exports.login = (req, res, next) => {
     }
 
     if (!user) {
-      return res.redirect(`/login?error=${info.message}`);
+      // not found error http code
+      return res.sendStatus(404);
     }
 
     return req.login(user, (loginError) => {
@@ -40,7 +42,8 @@ exports.login = (req, res, next) => {
         return next(loginError);
       }
 
-      return res.redirect("/");
+      // success http code
+      return res.sendStatus(200);
     });
   })(req, res, next);
 };
@@ -48,5 +51,7 @@ exports.login = (req, res, next) => {
 exports.logout = (req, res, next) => {
   req.logout();
   req.session.destroy();
-  res.redirect("/");
+
+  // success http code
+  res.sendStatus(200);
 };
