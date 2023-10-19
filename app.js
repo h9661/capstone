@@ -5,6 +5,7 @@ const path = require("path");
 const session = require("express-session");
 const dotenv = require("dotenv");
 const passport = require("passport");
+const cors = require("cors");
 
 const indexRouter = require("./backend/routes/index");
 const authRouter = require("./backend/routes/auth");
@@ -27,6 +28,7 @@ app.set("port", process.env.PORT || 3000);
 app.set("view engine", "html");
 
 // 각각의 static 파일들 경로 설정
+app.use(cors());
 app.use("/images", express.static(path.join(__dirname, "backend/images")));
 app.use("/videos", express.static(path.join(__dirname, "backend/videos")));
 app.use("/statics", express.static(path.join(__dirname, "frontend/public")));
