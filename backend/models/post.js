@@ -16,10 +16,6 @@ class Post extends Sequelize.Model {
           type: Sequelize.TEXT,
           allowNull: false,
         },
-        password: {
-          type: Sequelize.STRING(100),
-          allowNull: false,
-        },
       },
       {
         sequelize,
