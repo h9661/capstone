@@ -29,14 +29,13 @@ router.get("/:postId/detail", isLoggedIn, async (req, res) => {
 
 // 글을 작성합니다.
 router.post("/write", isLoggedIn, async (req, res) => {
-  let { title, category, content, password, writer } = req.body;
+  let { title, category, content, writer } = req.body;
 
   try {
     await Post.create({
       title: title,
       category: category,
       content: content,
-      password: password,
       writer: writer,
     });
   } catch (err) {
@@ -49,7 +48,7 @@ router.post("/write", isLoggedIn, async (req, res) => {
 // 글을 수정합니다.
 router.put("/:postId/update", isLoggedIn, async (req, res) => {
   let postId = req.params.postId;
-  let { title, category, content, password } = req.body;
+  let { title, category, content } = req.body;
 
   try {
     await Post.update(
@@ -57,7 +56,6 @@ router.put("/:postId/update", isLoggedIn, async (req, res) => {
         title: title,
         category: category,
         content: content,
-        password: password,
       },
       { where: { id: postId } }
     );
@@ -84,7 +82,7 @@ router.delete("/:postId/delete", isLoggedIn, async (req, res) => {
 // 댓글을 작성합니다.
 router.post("/:postId/comment/write", isLoggedIn, async (req, res) => {
   let postId = req.params.postId;
-  let { writer, content, password } = req.body;
+  let { writer, content } = req.body;
 
   try {
     await Comment.create({
@@ -92,6 +90,26 @@ router.post("/:postId/comment/write", isLoggedIn, async (req, res) => {
       content: content,
       post_id: postId,
     });
+  } catch (err) {
+    console.error(err);
+  }
+
+  res.json({ result: "success" });
+});
+
+// 댓글을 수정합니다.
+router.put("/:postId/comment/:commentId/update", isLoggedIn, async (req, res) => {
+  let commentId = req.params.commentId;
+  let { writer, content } = req.body;
+
+  try {
+    await Comment.update(
+      {
+        writer: writer,
+        content: content,
+      },
+      { where: { id: commentId } }
+    );
   } catch (err) {
     console.error(err);
   }
@@ -116,7 +134,7 @@ router.delete("/:postId/comment/:commentId/delete", isLoggedIn, async (req, res)
 router.post("/:postId/comment/:commentId/recomment/write", isLoggedIn, async (req, res) => {
   let postId = req.params.postId;
   let commentId = req.params.commentId;
-  let { writer, content, password } = req.body;
+  let { writer, content } = req.body;
 
   try {
     await Recomment.create({
@@ -125,6 +143,26 @@ router.post("/:postId/comment/:commentId/recomment/write", isLoggedIn, async (re
       post_id: postId,
       comment_id: commentId,
     });
+  } catch (err) {
+    console.error(err);
+  }
+
+  res.json({ result: "success" });
+});
+
+// 대댓글을 수정합니다.
+router.put("/:postId/comment/:commentId/recomment/:recommentId/update", isLoggedIn, async (req, res) => {
+  let recommentId = req.params.recommentId;
+  let { writer, content } = req.body;
+
+  try {
+    await Recomment.update(
+      {
+        writer: writer,
+        content: content,
+      },
+      { where: { id: recommentId } }
+    );
   } catch (err) {
     console.error(err);
   }
