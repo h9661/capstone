@@ -9,11 +9,13 @@ const cors = require("cors");
 
 const indexRouter = require("./backend/routes/index");
 const authRouter = require("./backend/routes/auth");
+const postRouter = require("./backend/routes/postRouter");
+const userRouter = require("./backend/routes/userRouter");
 const { sequelize } = require("./backend/models/index");
 const passportConfig = require("./backend/passport/index");
 
 sequelize
-  .sync({ force: true }) // force: true -> 서버 실행 시마다 테이블 재생성
+  .sync({ force: false }) // force: true -> 서버 실행 시마다 테이블 재생성
   .then(() => {
     console.log("데이터베이스 연결 성공");
   })
@@ -53,6 +55,8 @@ app.use(passport.session());
 
 app.use("/auth", authRouter);
 app.use("/", indexRouter);
+app.use("/post", postRouter);
+app.use("/user", userRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
