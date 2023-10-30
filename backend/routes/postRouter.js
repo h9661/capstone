@@ -18,11 +18,23 @@ router.get("/:postCategory", isLoggedIn, async (req, res) => {
   res.json(categorizedPost);
 });
 
-// 글의 상세 정보를 얻어옵니다.
+// 글의 상세 정보를 얻어옵니다. comment와 recomment를 포함합니다.
 router.get("/:postId/detail", isLoggedIn, async (req, res) => {
   let postId = req.params.postId;
 
-  let postDetail = await Post.findOne({ where: { id: postId } });
+  let postDetail = await Post.findOne({
+    where: { id: postId },
+    include: [
+      {
+        model: Comment,
+        include: [
+          {
+            model: Recomment,
+          },
+        ],
+      },
+    ],
+  });
 
   res.json(postDetail);
 });
