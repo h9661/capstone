@@ -1,1 +1,5 @@
 node_modules/
+
+# lecture 관련 파일들 ignore
+getLecture.js
+lectures.json
