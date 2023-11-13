@@ -54,7 +54,6 @@ exports.logout = (req, res, next) => {
       return next(err);
     }
   });
-  req.session.destroy();
 
   // success http code
   res.sendStatus(200);
