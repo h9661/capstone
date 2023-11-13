@@ -7,7 +7,7 @@ exports.join = async (req, res, next) => {
   try {
     const exUser = await User.findOne({ where: { username } });
     if (exUser) {
-      return res.redirect("/join?error=exist");
+      return res.status(403).send("이미 사용중인 아이디입니다.");
     }
 
     const hash = await bycrypt.hash(password, 12);
@@ -17,7 +17,7 @@ exports.join = async (req, res, next) => {
       password: hash,
     });
 
-    return res.redirect("/");
+    return res.sendStatus(200);
   } catch (error) {
     console.error(error);
     return next(error);
@@ -33,7 +33,7 @@ exports.login = (req, res, next) => {
 
     if (!user) {
       // not found error http code
-      return res.sendStatus(404);
+      return res.status(404).send(info.message);
     }
 
     return req.login(user, (loginError) => {
