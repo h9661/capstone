@@ -49,7 +49,11 @@ exports.login = (req, res, next) => {
 };
 
 exports.logout = (req, res, next) => {
-  req.logout();
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+  });
   req.session.destroy();
 
   // success http code
